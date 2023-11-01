@@ -1,13 +1,16 @@
 <script lang="ts" setup>
-import { inject, $navigateTo } from "nativescript-vue";
-import CounterPage from "~/components/pages/Counter.vue";
+import { $navigateBack } from "nativescript-vue";
+import { useCounter } from "~/stores/counter";
 
-const { increase } = inject("count");
+const counter = useCounter();
 </script>
 
 <template>
     <Page>
-        <Button @tap="increase" text="Increase the counter" />
-        <Button @tap="$navigateTo(CounterPage, {frame: 'dash'})" text="Go to Counter" />
+        <FlexboxLayout flexDirection="column">
+            <Label :text="counter.count" />
+            <Button @tap="counter.increase" text="Increase the counter" />
+            <Button @tap="$navigateBack({frame: 'dash'})" text="Go to Counter" />
+        </FlexboxLayout>
     </Page>
 </template>
